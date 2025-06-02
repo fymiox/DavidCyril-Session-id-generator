@@ -2,40 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ZENITSU CRASH BUG </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URANIUM BOT PANEL ☢️</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    :root {
+      --primary: #7e22ce;
+      --secondary: #3b82f6;
+      --accent: #06b6d4;
+      --dark: #0f172a;
+      --darker: #020617;
+    }
+    
     body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: black;
+      padding: 20px;
+      color: white;
+      overflow-x: hidden;
     }
-
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+      max-width: 600px;
+    }
+    
+    .uranium-icon {
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      font-size: 10rem;
+      opacity: 0.05;
+      z-index: -1;
+      transform: rotate(20deg);
+      color: var(--accent);
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      z-index: 2;
+    }
+    
     .btn {
       --color: #e5f5f1;
       --color2: rgb(0, 0, 0);
-      width: 200px;
-      padding: 0.8em 1.75em;
-      background-color: green;
-      border-radius: 6px;
-      border: .3px solid var(--color);
-      transition: .5s;
+      padding: 1.5em 2em;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 16px;
+      border: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
       cursor: pointer;
       z-index: 1;
-      font-weight: 300;
-      font-size: 17px;
-      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
       text-transform: uppercase;
-      color: var(--color);
-      margin-bottom: 24px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      min-height: 120px;
     }
-
+    
     .btn::after, .btn::before {
       content: '';
       display: block;
@@ -47,44 +112,229 @@
       left: 25%;
       z-index: -1;
       transition: .5s ease-out;
-      background-color: var(--color);
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      opacity: 0;
     }
-
+    
     .btn::before {
       top: -50%;
       left: -25%;
       transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
     }
-
+    
     .btn:hover::before {
       transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+      opacity: 1;
     }
-
+    
     .btn:hover::after {
       transform: skew(45deg) translate(-50%, -50%);
+      opacity: 1;
     }
-
+    
     .btn:hover {
-      color: var(--color2);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     }
-
+    
     .btn:active {
-      filter: brightness(.7);
-      transform: scale(.98);
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn i {
+      font-size: 1.8rem;
+    }
+    
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+      max-width: 800px;
+    }
+    
+    .footer p {
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+    
+    .owner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+    
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100vw) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      
+      .btn {
+        padding: 1.2em 1.5em;
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn {
+        min-height: 100px;
+      }
     }
   </style>
 </head>
 <body>
-
-  <button onclick="window.open(`/wasiqr`)" class="btn">QR Code</button>
-  <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
-  <button onclick="window.open(`https://github.com/Fearless-tech1`)" class="btn">Bot Repo</button>
-  <button onclick="window.open(`https://github.com/Fearless-tech1`)" class="btn">Plugins</button>
-  <button onclick="window.open(`https://wa.me/2348075952205`)" class="btn">Contact Me</button>
-  <button onclick="window.open(`https://chat.whatsapp.com/C3GFThC0tIpGaJY9DFUeCK`)" class="btn">Wa Group</button>
-  <button onclick="window.open(`https://whatsapp.com/channel/0029VahusSh0QeaoFzHJCk2x`)" class="btn">Wa Channel</button>
-  <button onclick="window.open(`https://www.youtube.com/@BTSMODZ`)" class="btn">Youtube</button>
+  <div class="header">
+    <i class="fas fa-radiation uranium-icon"></i>
+    <h1>URANIUM BOT PANEL ☢️</h1>
+    <p>Control your Uranium WhatsApp bot with these management tools</p>
+  </div>
   
-
+  <div class="container">
+    <button onclick="window.open('/wasiqr')" class="btn">
+      <i class="fas fa-qrcode"></i>
+      QR Code ☢️
+    </button>
+    
+    <button onclick="window.open('/pair')" class="btn">
+      <i class="fas fa-code"></i>
+      Pair Code ☢️
+    </button>
+    
+    <button onclick="window.open('https://github.com/Fearless-tech1')" class="btn">
+      <i class="fab fa-github"></i>
+      Bot Repository
+    </button>
+    
+    <button onclick="window.open('https://github.com/Fearless-tech1')" class="btn">
+      <i class="fas fa-plug"></i>
+      Plugins
+    </button>
+    
+    <button onclick="window.open('https://wa.me/2348075952205')" class="btn">
+      <i class="fab fa-whatsapp"></i>
+      Contact Developer
+    </button>
+    
+    <button onclick="window.open('https://chat.whatsapp.com/C3GFThC0tIpGaJY9DFUeCK')" class="btn">
+      <i class="fas fa-users"></i>
+      WhatsApp Group
+    </button>
+    
+    <button onclick="window.open('https://whatsapp.com/channel/0029VahusSh0QeaoFzHJCk2x')" class="btn">
+      <i class="fas fa-bullhorn"></i>
+      WhatsApp Channel
+    </button>
+    
+    <button onclick="window.open('https://www.youtube.com/@BTSMODZ')" class="btn">
+      <i class="fab fa-youtube"></i>
+      YouTube ☢️
+    </button>
+  </div>
+  
+  <div class="footer">
+    <p>Uranium Bot - Next Generation WhatsApp Automation</p>
+    <div class="owner">
+      <i class="fas fa-user"></i>
+      <span>Owner: Ilyass ☕</span>
+    </div>
+  </div>
+  
+  <div class="particles" id="particles"></div>
+  
+  <script>
+    // Create floating particles
+    const particlesContainer = document.getElementById('particles');
+    const colors = ['#7e22ce', '#3b82f6', '#06b6d4', '#8b5cf6'];
+    
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      
+      // Random properties
+      const size = Math.random() * 20 + 5;
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const delay = Math.random() * 15;
+      const duration = Math.random() * 10 + 15;
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${posX}vw`;
+      particle.style.top = `${posY}vh`;
+      particle.style.background = color;
+      particle.style.animationDelay = `${delay}s`;
+      particle.style.animationDuration = `${duration}s`;
+      
+      particlesContainer.appendChild(particle);
+    }
+    
+    // Add button press effect
+    document.querySelectorAll('.btn').forEach(button => {
+      button.addEventListener('mousedown', () => {
+        button.style.transform = 'scale(0.95)';
+      });
+      
+      button.addEventListener('mouseup', () => {
+        button.style.transform = '';
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        button.style.transform = '';
+      });
+    });
+  </script>
 </body>
 </html>
