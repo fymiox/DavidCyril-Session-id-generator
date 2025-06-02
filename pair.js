@@ -1,100 +1,117 @@
-const PastebinAPI = require('pastebin-js'),
-pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL')
-const {makeid} = require('./id');
+const PastebinAPI = require('pastebin-js');
+const pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL');
+const { makeid } = require('./id');
 const express = require('express');
 const fs = require('fs');
-let router = express.Router()
+const router = express.Router();
 const pino = require("pino");
 const {
-    default: Gifted_Tech,
+    default: Uranium,
     useMultiFileAuthState,
     delay,
     makeCacheableSignalKeyStore,
     Browsers
 } = require("maher-zubair-baileys");
 
-function removeFile(FilePath){
-    if(!fs.existsSync(FilePath)) return false;
-    fs.rmSync(FilePath, { recursive: true, force: true })
- };
+function removeFile(FilePath) {
+    if (!fs.existsSync(FilePath)) return false;
+    fs.rmSync(FilePath, { recursive: true, force: true });
+};
+
 router.get('/', async (req, res) => {
-    const id = makeid();
-    let num = req.query.number;
-        async function GIFTED_MD_PAIR_CODE() {
-        const {
-            state,
-            saveCreds
-        } = await useMultiFileAuthState('./temp/'+id)
-     try {
-            let Pair_Code_By_Gifted_Tech = Gifted_Tech({
+    const sessionId = makeid();
+    let phoneNumber = req.query.number;
+    
+    async function uraniumPairCode() {
+        const { state, saveCreds } = await useMultiFileAuthState(`./temp/${sessionId}`);
+        
+        try {
+            let uraniumBot = Uranium({
                 auth: {
                     creds: state.creds,
-                    keys: makeCacheableSignalKeyStore(state.keys, pino({level: "fatal"}).child({level: "fatal"})),
+                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
                 },
                 printQRInTerminal: false,
-                logger: pino({level: "fatal"}).child({level: "fatal"}),
-                browser: ["Chrome (Linux)", "", ""]
-             });
-             if(!Pair_Code_By_Gifted_Tech.authState.creds.registered) {
-                await delay(1500);
-                        num = num.replace(/[^0-9]/g,'');
-                            const code = await Pair_Code_By_Gifted_Tech.requestPairingCode(num)
-                 if(!res.headersSent){
-                 await res.send({code});
-                     }
-                 }
-            Pair_Code_By_Gifted_Tech.ev.on('creds.update', saveCreds)
-            Pair_Code_By_Gifted_Tech.ev.on("connection.update", async (s) => {
-                const {
-                    connection,
-                    lastDisconnect
-                } = s;
-                if (connection == "open") {
-                await delay(5000);
-                let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-                await delay(800);
-               let b64data = Buffer.from(data).toString('base64');
-               let session = await Pair_Code_By_Gifted_Tech.sendMessage(Pair_Code_By_Gifted_Tech.user.id, { text: '' + b64data });
+                logger: pino({ level: "fatal" }).child({ level: "fatal" }),
+                browser: ["Uranium (Linux)", "", ""],
+                syncFullHistory: false,
+                getMessage: async () => {}
+            });
 
-               let GIFTED_MD_TEXT = `
-*_Pair Code Connected by ZENITSU*
-*_Made With 🚬🗿_*
+            if (!uraniumBot.authState.creds.registered) {
+                await delay(1500);
+                phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+                const code = await uraniumBot.requestPairingCode(phoneNumber);
+                
+                if (!res.headersSent) {
+                    await res.send({ code });
+                }
+            }
+
+            uraniumBot.ev.on('creds.update', saveCreds);
+            uraniumBot.ev.on("connection.update", async (update) => {
+                const { connection, lastDisconnect } = update;
+                
+                if (connection === "open") {
+                    await delay(5000);
+                    let data = fs.readFileSync(__dirname + `/temp/${sessionId}/creds.json`);
+                    await delay(800);
+                    let b64data = Buffer.from(data).toString('base64');
+                    
+                    let sessionMessage = await uraniumBot.sendMessage(
+                        uraniumBot.user.id, 
+                        { text: `Session Credentials (Base64):` }
+                    );
+
+                    const successMessage = `
+*⚡ Pairing Successful with Uranium ✨*
+*Crafted with ❤️ by Ilyass ☕*
 ______________________________________
-╔════◇
-║ *『 AMAZING YOU'VE CHOSEN ZENITSU CRASH V2 』*
-║ _You Have Completed the First Step to Deploy a Whatsapp Bot._
+╔════════════════════════╗
+║  『 URANIUM DEPLOYMENT SUCCESS 』
+║ • You've completed the first step!
+║ • Bot is now ready for action
 ╚════════════════════════╝
-╔═════◇
-║  『••• 𝗩𝗶𝘀𝗶𝘁 𝗙𝗼𝗿 𝗛𝗲𝗹𝗽 •••』
-║❒ *Ytube:* _https://www.youtube.com/@BTSMODZ
-║❒ *Owner:* https://wa.me/2348075952205_
-║❒ *Repo:* _https://github.com/Fearless-tech1_
-║❒ *WaGroup:* _https://chat.whatsapp.com/C3GFThC0tIpGaJY9DFUeCK
-║❒ *WaChannel:* _https://whatsapp.com/channel/0029VahusSh0QeaoFzHJCk2x
-║❒ *Plugins:* _https://github.com/Fearless-tech1 
+╔════════════════════════╗
+║  『 SUPPORT INFORMATION 』
+║❒ *Developer:* Ilyass ☕
+║❒ *Contact:* https://wa.me/2348075952205
+║❒ *YouTube:* https://www.youtube.com/@BTSMODZ
+║❒ *GitHub:* https://github.com/Fearless-tech1
+║❒ *Community:* https://chat.whatsapp.com/C3GFThC0tIpGaJY9DFUeCK
+║❒ *Channel:* https://whatsapp.com/channel/0029VahusSh0QeaoFzHJCk2x
 ╚════════════════════════╝
 _____________________________________
+_Remember to star our GitHub repository!_`;
 
-_Don't Forget To Give Star To My Repo_`
- await Pair_Code_By_Gifted_Tech.sendMessage(Pair_Code_By_Gifted_Tech.user.id,{text:GIFTED_MD_TEXT},{quoted:session})
- 
+                    await uraniumBot.sendMessage(
+                        uraniumBot.user.id,
+                        { text: successMessage },
+                        { quoted: sessionMessage }
+                    );
 
-        await delay(100);
-        await Pair_Code_By_Gifted_Tech.ws.close();
-        return await removeFile('./temp/'+id);
-            } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                    await delay(100);
+                    await uraniumBot.ws.close();
+                    return removeFile(`./temp/${sessionId}`);
+                } 
+                else if (connection === "close" && lastDisconnect?.error?.output?.statusCode !== 401) {
+                    console.log("Reconnecting...");
                     await delay(10000);
-                    GIFTED_MD_PAIR_CODE();
+                    uraniumPairCode();
                 }
             });
-        } catch (err) {
-            console.log("service restated");
-            await removeFile('./temp/'+id);
-         if(!res.headersSent){
-            await res.send({code:"Service Unavailable"});
-         }
+        } 
+        catch (error) {
+            console.error("Pairing error:", error.message);
+            await removeFile(`./temp/${sessionId}`);
+            
+            if (!res.headersSent) {
+                await res.status(503).send({ code: "Service Unavailable" });
+            }
         }
     }
-    return await GIFTED_MD_PAIR_CODE()
+    
+    return uraniumPairCode();
 });
-module.exports = router
+
+module.exports = router;
